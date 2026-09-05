@@ -22,6 +22,13 @@ MAX_OUTPUT = 200_000
 TIMEOUT_SECONDS = 20
 UPDATE_TIMEOUT_SECONDS = 90
 EXPECTED_REPOSITORY = "https://github.com/zoamartinez/chatgpt-local-bridge.git"
+APPLICATIONS = {
+    "settings": "/usr/bin/gnome-control-center",
+    "files": "/usr/bin/nautilus",
+    "terminal": "/usr/bin/foot",
+    "calculator": "/usr/bin/gnome-calculator",
+    "editor": "/usr/bin/gnome-text-editor",
+}
 
 SIMPLE_COMMANDS = {
     "ps", "free", "df", "uptime", "uname", "lspci", "lsusb", "lsblk",
@@ -186,11 +193,58 @@ def update_bridge() -> dict[str, Any]:
     }
 
 
+def open_application(request: dict[str, Any]) -> dict[str, Any]:
+    app = request.get("app")
+    executable = APPLICATIONS.get(app)
+    if not executable:
+        raise ValueError("Aplicación no permitida")
+    if not Path(executable).is_file():
+        raise ValueError(f"La aplicación no está instalada: {app}")
+    subprocess.Popen(
+        [executable],
+        stdin=subprocess.DEVNULL,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+        start_new_session=True,
+        close_fds=True,
+    )
+    return {"ok": True, "app": app}
+
+
+def open_path(request: dict[str, Any]) -> dict[str, Any]:
+    value = request.get("path")
+    if not isinstance(value, str) or not value:
+        raise ValueError("Falta la ruta")
+    home = Path.home().resolve()
+    target = Path(value).expanduser().resolve()
+    if target != home and home not in target.parents:
+        raise ValueError("Solo se permiten rutas dentro de la carpeta personal")
+    if not target.exists():
+        raise ValueError("La ruta no existe")
+    nautilus = Path("/usr/bin/nautilus")
+    if not nautilus.is_file():
+        raise ValueError("Nautilus no está instalado")
+    args = [str(nautilus), str(target)] if target.is_dir() else [str(nautilus), "--select", str(target)]
+    subprocess.Popen(
+        args,
+        stdin=subprocess.DEVNULL,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+        start_new_session=True,
+        close_fds=True,
+    )
+    return {"ok": True, "path": str(target), "selected": target.is_file()}
+
+
 def execute(request: dict[str, Any]) -> dict[str, Any]:
     if request.get("version") != 1:
         raise ValueError("Versión no permitida")
     if request.get("tool") == "update_bridge":
         return update_bridge()
+    if request.get("tool") == "open_app":
+        return open_application(request)
+    if request.get("tool") == "open_path":
+        return open_path(request)
     if request.get("tool") != "run_command":
         raise ValueError("Herramienta no permitida")
     args = validate_args(request.get("args"))
