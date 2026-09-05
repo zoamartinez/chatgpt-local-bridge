@@ -1,0 +1,29 @@
+.clb-card {
+  border: 1px solid #4b5563;
+  border-radius: 12px;
+  margin: 12px 0;
+  padding: 14px;
+  background: color-mix(in srgb, Canvas 94%, #10a37f 6%);
+  color: CanvasText;
+  font: 14px/1.45 system-ui, sans-serif;
+}
+.clb-title { font-weight: 700; margin-bottom: 8px; }
+.clb-command {
+  display: block;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  margin: 8px 0;
+  padding: 8px;
+  border-radius: 8px;
+  background: color-mix(in srgb, Canvas 85%, CanvasText 15%);
+}
+.clb-actions { display: flex; gap: 8px; margin-top: 10px; }
+.clb-actions button {
+  border: 1px solid #6b7280;
+  border-radius: 8px;
+  padding: 7px 11px;
+  cursor: pointer;
+}
+.clb-allow { background: #10a37f; color: white; }
+.clb-deny { background: transparent; color: inherit; }
+.clb-status { margin-top: 8px; white-space: pre-wrap; }
