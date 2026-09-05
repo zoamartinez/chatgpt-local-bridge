@@ -1,6 +1,6 @@
 # ChatGPT Local Bridge
 
-Versión 0.2.1.
+Versión 0.3.0.
 
 Prototipo local y auditable para conectar ChatGPT Web con herramientas de
 consulta de un equipo Arch/Omarchy. Una extensión Chromium detecta solicitudes
@@ -18,6 +18,9 @@ solo se remite al chat cuando la persona pulsa **Enviar**.
 - El detector espera a que el contenido deje de cambiar antes de analizarlo, para
   evitar consumo elevado de CPU durante respuestas largas.
 - Actualización bajo aprobación desde un único repositorio fijado en el código.
+- Panel visual local con modos Bloquear, Preguntar y Automático por capacidad.
+- Apertura acotada de aplicaciones y rutas personales.
+- Control de pestañas sin leer títulos o URLs y lectura separada bajo permiso.
 
 Comandos iniciales: `ps`, `free`, `df`, `uptime`, `uname`, `lspci`, `lsusb`,
 `lsblk`, `ss`, `sensors`, `hostnamectl`, `timedatectl`, `loginctl`, `upower`,
