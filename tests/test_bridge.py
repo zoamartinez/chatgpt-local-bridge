@@ -72,6 +72,14 @@ class BridgeValidationTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, "clon Git"):
                     bridge.update_bridge()
 
+    def test_rejects_unknown_application(self):
+        with self.assertRaisesRegex(ValueError, "Aplicación"):
+            bridge.open_application({"app": "anything"})
+
+    def test_rejects_path_outside_home(self):
+        with self.assertRaisesRegex(ValueError, "carpeta personal"):
+            bridge.open_path({"path": "/etc"})
+
 
 if __name__ == "__main__":
     unittest.main()
