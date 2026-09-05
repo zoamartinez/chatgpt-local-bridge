@@ -1,6 +1,6 @@
 # ChatGPT Local Bridge
 
-Versión 0.2.0.
+Versión 0.2.1.
 
 Prototipo local y auditable para conectar ChatGPT Web con herramientas de
 consulta de un equipo Arch/Omarchy. Una extensión Chromium detecta solicitudes
@@ -40,8 +40,7 @@ consultas con `ip`, acciones de lectura de `systemctl` y opciones acotadas de
 6. Desde la raíz del proyecto ejecuta:
 
    ```bash
-   chmod +x scripts/install.sh scripts/uninstall.sh
-   ./scripts/install.sh ID_DE_LA_EXTENSION
+   bash scripts/install.sh ID_DE_LA_EXTENSION
    ```
 
 7. Reinicia la aplicación web de ChatGPT de Omarchy.
@@ -84,7 +83,7 @@ operar con privilegios de administrador.
 ## Desinstalación
 
 ```bash
-./scripts/uninstall.sh
+bash scripts/uninstall.sh
 ```
 
 Después elimina la extensión desde `chromium://extensions`.
