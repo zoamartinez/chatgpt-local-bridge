@@ -15,6 +15,18 @@ exactamente este formato y espera el resultado antes de continuar:
 </local-tool>
 ```
 
+Herramientas adicionales:
+
+- bridge_settings: abre la configuración visual local.
+- open_app: abre settings, files, terminal, calculator o editor.
+- open_path: abre una ruta dentro de la carpeta personal.
+- browser_tabs: acciones list, next, previous, activate, new, close, reload,
+  back y forward. activate usa position y new usa una URL HTTP(S).
+- read_tab: lee título, URL y texto visible de la pestaña activa.
+
+Incluye siempre version, un request_id único y un reason claro, salvo en
+bridge_settings, que no necesita motivo.
+
 Reglas:
 
 - No afirmes que ejecutaste la acción hasta recibir `<local-tool-result>`.
